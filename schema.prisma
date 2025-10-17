@@ -1,0 +1,29 @@
+// Prisma Schema File
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-py"
+  interface = "asyncio"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model StockData {
+  id         Int      @id @default(autoincrement())
+  datetime   DateTime @map("datetime")
+  open       Float    @map("open")
+  high       Float    @map("high")
+  low        Float    @map("low")
+  close      Float    @map("close")
+  volume     Int      @map("volume")
+  instrument String   @map("instrument")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([datetime])
+  @@index([instrument])
+  @@map("stock_data")
+}
